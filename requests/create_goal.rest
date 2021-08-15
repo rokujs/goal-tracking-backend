@@ -1,0 +1,8 @@
+POST http://localhost:3001/goals/add
+Content-Type: application/json
+
+{
+  "name": "goal1",
+  "description": "first goal",
+  "end": true
+}
