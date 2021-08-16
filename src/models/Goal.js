@@ -6,7 +6,8 @@ const GoalSchema = new Schema({
   timeEnd: { type: Date, required: false },
   tries: { type: Number, required: false },
   todayDone: { type: Boolean, required: false },
-  end: { type: Boolean, required: true }
+  end: { type: Boolean, required: true },
+  user: { type: String, require: true }
 },
 {
   timestamps: true
