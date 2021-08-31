@@ -2,7 +2,9 @@ POST http://localhost:8080/goals/add
 Content-Type: application/json
 
 {
-  "name": "goal",
+  "name": "test",
   "description": "una descripcion pendeja",
-  "timeEnd": "2021-08-02"
+  "timeEnd": "2021-08-02",
+  "start": "2022-5-13",
+  "user": "roku_js"
 }
