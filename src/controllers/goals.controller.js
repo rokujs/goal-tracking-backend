@@ -44,11 +44,16 @@ goalCtrl.wasDone = async (req, res) => {
 }
 
 goalCtrl.abandonGoal = async (req, res) => {
-  const { end, tries } = req.body
-  const { name } = await Goal.findById(req.params.id)
+  const { end, newTries } = req.body
+  const { tries } = await Goal.findById(req.params.id)
+
+  tries.push(newTries)
+
   await Goal.findByIdAndUpdate(req.params.id, { end, tries })
 
-  res.statusCode(200)
+  res
+    .status(200)
+    .json({ message: 'You have abandoned the goal' })
 }
 
 goalCtrl.deleteGoal = async (req, res) => {
