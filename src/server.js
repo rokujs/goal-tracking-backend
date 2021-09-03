@@ -7,6 +7,7 @@ const app = express()
 
 // settings
 app.set('port', process.env.PORT || 8080)
+require('./utils/resetGoals')
 
 // middleware
 app.use(cors())
