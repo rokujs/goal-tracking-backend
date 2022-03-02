@@ -4,6 +4,7 @@ const GoalSchema = new Schema(
   {
     name: { type: String, required: true },
     description: { type: String, required: true },
+    start: { type: Date, required: true },
     timeEnd: { type: Date, required: false },
     tries: [
       {
@@ -12,7 +13,6 @@ const GoalSchema = new Schema(
       }
     ],
     todayDone: { type: Boolean, required: false },
-    start: { type: String, required: true },
     end: { type: Boolean, required: true },
     user: { type: String, require: true }
   },

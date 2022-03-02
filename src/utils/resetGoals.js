@@ -1,22 +1,55 @@
-'use strict'
-const Goal = require('../models/Goal')
+/* eslint-disable quotes */
+"use strict"
+const Goal = require("../models/Goal")
 
 function reset () {
-  Goal.updateMany(
-    { $set: { todayDone: false } }
-  ).catch(err => console.error(err))
+  // Goal.updateMany(
+  //   { todayDone: true },
+  //   { $set: { todayDone: false } }
+  // ).catch(err => console.error(err))
+
+  // crear con javascript
+  // Goal.updateMany(
+  //   { todayDone: false },
+  //   {
+  //     $set: { todayDone: false, end: true },
+  //     $push: {
+  //       tries: {
+  //         start: "$start",
+  //         end: new Date()
+  //       }
+  //     }
+  //   }
+  // ).catch(err => console.error(err))
+
+  Goal.find().then(goals => {
+    goals.forEach(goal => {
+      if (!goal.todayDone) {
+        Goal.findByIdAndUpdate(goal._id, {
+          $set: { todayDone: true, end: true },
+          $push: { tries: { start: goal.start, end: new Date() } }
+        }).catch(err => console.error(err))
+      }
+    })
+  })
 }
 
 function launcher (hour, minutes, task) {
   const now = new Date()
-  console.log('Launcher', now)
-  let moment = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minutes)
+  console.log("Launcher", now)
+  let moment = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    hour,
+    minutes
+  )
 
   if (moment <= now) {
     moment = new Date(moment.getTime() + 1000 * 60 * 60 * 24)
   }
 
-  console.log('To be run in', moment)
+  console.log("To be run in", moment)
 
   setTimeout(() => {
     task()
@@ -24,4 +57,4 @@ function launcher (hour, minutes, task) {
   }, moment.getTime() - now.getTime())
 }
 
-launcher(23, 59, reset)
+launcher(0, 10, reset)

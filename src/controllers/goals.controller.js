@@ -3,7 +3,9 @@ const Goal = require('../models/Goal')
 const goalCtrl = {}
 
 goalCtrl.createNewGoal = (req, res) => {
-  const { name, description, timeEnd, start, user } = req.body
+  const { name, description, timeEnd, user } = req.body
+
+  const start = new Date()
 
   const newGoal = new Goal({
     name,
@@ -53,7 +55,7 @@ goalCtrl.abandonGoal = async (req, res) => {
 
   res
     .status(200)
-    .json({ message: 'You have abandoned the goal' })
+    .json({ message: 'You have abandoned the goal', tries: tries })
 }
 
 goalCtrl.deleteGoal = async (req, res) => {
