@@ -3,25 +3,6 @@
 const Goal = require("../models/Goal")
 
 function reset () {
-  // Goal.updateMany(
-  //   { todayDone: true },
-  //   { $set: { todayDone: false } }
-  // ).catch(err => console.error(err))
-
-  // crear con javascript
-  // Goal.updateMany(
-  //   { todayDone: false },
-  //   {
-  //     $set: { todayDone: false, end: true },
-  //     $push: {
-  //       tries: {
-  //         start: "$start",
-  //         end: new Date()
-  //       }
-  //     }
-  //   }
-  // ).catch(err => console.error(err))
-
   Goal.find().then(goals => {
     goals.forEach(goal => {
       if (!goal.todayDone) {

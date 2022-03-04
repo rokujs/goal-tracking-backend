@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router()
 
-const { createNewGoal, getAllGoals, getSingleGoal, wasDone, abandonGoal, deleteGoal } = require('../controllers/goals.controller')
+const { createNewGoal, getAllGoals, getSingleGoal, wasDone, abandonGoal, deleteGoal, resumeGoal } = require('../controllers/goals.controller')
 
 // All goals
 router.get('/goals', getAllGoals)
@@ -20,5 +20,8 @@ router.patch('/goal/:id', wasDone)
 
 // delete goal
 router.delete('/goal/:id', deleteGoal)
+
+// resume goal
+router.patch('/goal/resume/:id', resumeGoal)
 
 module.exports = router

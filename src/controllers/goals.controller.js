@@ -67,4 +67,13 @@ goalCtrl.deleteGoal = async (req, res) => {
     .json({ message: `The goal ${name} was deleted` })
 }
 
+goalCtrl.resumeGoal = async (req, res) => {
+  const { newStart, newEnd } = req.body
+  await Goal.findByIdAndUpdate(req.params.id, { start: newStart, todayDone: false, timeEnd: newEnd, end: false })
+
+  res
+    .status(200)
+    .json({ message: 'Goal resumed' })
+}
+
 module.exports = goalCtrl
