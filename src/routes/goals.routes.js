@@ -4,24 +4,24 @@ const router = Router()
 const { createNewGoal, getAllGoals, getSingleGoal, wasDone, abandonGoal, deleteGoal, resumeGoal } = require('../controllers/goals.controller')
 
 // All goals
-router.get('/goals', getAllGoals)
+router.get('/api/goals', getAllGoals)
 
 // new Goal
-router.post('/goals/add', createNewGoal)
+router.post('/api/goals/add', createNewGoal)
 
 // Single goal
-router.get('/goal/:id', getSingleGoal)
+router.get('/api/goal/:id', getSingleGoal)
 
 // abandon goal
-router.put('/goal/:id', abandonGoal)
+router.put('/api/goal/:id', abandonGoal)
 
 // done goal
-router.patch('/goal/:id', wasDone)
+router.patch('/api/goal/:id', wasDone)
 
 // delete goal
-router.delete('/goal/:id', deleteGoal)
+router.delete('/api/goal/:id', deleteGoal)
 
 // resume goal
-router.patch('/goal/resume/:id', resumeGoal)
+router.patch('/api/goal/resume/:id', resumeGoal)
 
 module.exports = router
