@@ -5,8 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "eslint": "eslint --init",
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "NODE_ENV=production node src/index.js",
+    "dev": "NODE_ENV=development nodemon src/index.js",
+    "test": "NODE_ENV=test jest --verbose --silent",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -19,19 +21,26 @@
     "url": "https://github.com/rokujs/goal-tracking-backend/issues"
   },
   "homepage": "https://github.com/rokujs/goal-tracking-backend#readme",
-  "devDependencies": {
-    "dotenv": "^10.0.0",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.24.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "nodemon": "^2.0.12"
-  },
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mongoose": "^5.13.5",
-    "morgan": "^1.10.0"
+    "bcrypt": "5.0.1",
+    "cors": "2.8.5",
+    "express": "4.17.1",
+    "mongoose": "5.13.5",
+    "morgan": "1.10.0"
+  },
+  "devDependencies": {
+    "dotenv": "10.0.0",
+    "eslint": "7.32.0",
+    "eslint-config-standard": "16.0.3",
+    "eslint-plugin-import": "2.24.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "5.1.0",
+    "jest": "27.5.1",
+    "nodemon": "2.0.12",
+    "supertest": "6.2.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 10000
   }
 }

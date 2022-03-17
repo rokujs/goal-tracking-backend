@@ -8,8 +8,8 @@ const GoalSchema = new Schema(
     timeEnd: { type: Date, required: false },
     tries: [
       {
-        start: String,
-        end: String
+        start: Date,
+        end: Date
       }
     ],
     todayDone: { type: Boolean, required: false },

@@ -38,28 +38,41 @@ goalCtrl.getAllGoals = async (req, res) => {
   res.json(goals)
 }
 
-goalCtrl.getSingleGoal = async (req, res) => {
-  const goal = await Goal.findById(req.params.id)
-
-  res.json(goal)
+goalCtrl.getSingleGoal = (req, res, next) => {
+  Goal.findById(req.params.id)
+    .then(goal => {
+      res.json(goal)
+    })
+    .catch(e => next(e))
 }
 
-goalCtrl.wasDone = async (req, res) => {
+goalCtrl.wasDone = (req, res, next) => {
   const { todayDone } = req.body
-  await Goal.findByIdAndUpdate(req.params.id, { todayDone })
 
-  res.status(200).json({ message: 'Goal done' })
+  if (!todayDone) { return res.status(400).json({ message: 'Fields are required' }) }
+
+  Goal.findByIdAndUpdate(req.params.id, { todayDone })
+    .then(() => {
+      res.status(200).json({ message: 'Goal done' })
+    })
+    .catch(e => next(e))
 }
 
-goalCtrl.abandonGoal = async (req, res) => {
-  const { end, newTries } = req.body
-  const { tries } = await Goal.findById(req.params.id)
+goalCtrl.abandonGoal = async (req, res, next) => {
+  try {
+    const { end, newTries } = req.body
 
-  tries.push(newTries)
+    if (!end || !newTries) { return res.status(404).json({ message: 'Fields are required' }) }
+    const { tries } = await Goal.findById(req.params.id)
 
-  await Goal.findByIdAndUpdate(req.params.id, { end, tries })
+    tries.push(newTries)
 
-  res.status(200).json({ message: 'You have abandoned the goal', tries: tries })
+    await Goal.findByIdAndUpdate(req.params.id, { end, tries })
+
+    res.status(200).json({ message: 'You have abandoned the goal', tries: tries, end: end })
+  } catch (error) {
+    next(error)
+  }
 }
 
 goalCtrl.deleteGoal = async (req, res, next) => {
@@ -74,16 +87,21 @@ goalCtrl.deleteGoal = async (req, res, next) => {
   }
 }
 
-goalCtrl.resumeGoal = async (req, res) => {
+goalCtrl.resumeGoal = (req, res, next) => {
   const { newStart, newEnd } = req.body
-  await Goal.findByIdAndUpdate(req.params.id, {
+
+  if (!newStart || !newEnd) { return res.status(400).json({ message: 'Fields are required' }) }
+
+  Goal.findByIdAndUpdate(req.params.id, {
     start: newStart,
     todayDone: false,
     timeEnd: newEnd,
     end: false
   })
-
-  res.status(200).json({ message: 'Goal resumed' })
+    .then(() => {
+      res.status(200).json({ message: 'Goal resumed' })
+    })
+    .catch(e => next(e))
 }
 
 module.exports = goalCtrl
