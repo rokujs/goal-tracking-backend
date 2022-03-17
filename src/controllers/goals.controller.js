@@ -2,7 +2,7 @@ const Goal = require('../models/Goal')
 
 const goalCtrl = {}
 
-goalCtrl.createNewGoal = (req, res) => {
+goalCtrl.createNewGoal = async (req, res, next) => {
   const { name, description, timeEnd, user } = req.body
 
   const start = new Date()
@@ -18,10 +18,18 @@ goalCtrl.createNewGoal = (req, res) => {
     user
   })
 
-  newGoal.save()
-  res
-    .status(201)
-    .json({ message: 'Goal created' })
+  if (!name || !description || !timeEnd) {
+    res.status(400).json({
+      error: 'fields are required'
+    })
+  }
+
+  try {
+    const saveGoal = await newGoal.save()
+    res.status(201).json({ message: 'Goal created', goal: saveGoal })
+  } catch (e) {
+    next(e)
+  }
 }
 
 goalCtrl.getAllGoals = async (req, res) => {
@@ -40,9 +48,7 @@ goalCtrl.wasDone = async (req, res) => {
   const { todayDone } = req.body
   await Goal.findByIdAndUpdate(req.params.id, { todayDone })
 
-  res
-    .status(200)
-    .json({ message: 'Goal done' })
+  res.status(200).json({ message: 'Goal done' })
 }
 
 goalCtrl.abandonGoal = async (req, res) => {
@@ -53,27 +59,31 @@ goalCtrl.abandonGoal = async (req, res) => {
 
   await Goal.findByIdAndUpdate(req.params.id, { end, tries })
 
-  res
-    .status(200)
-    .json({ message: 'You have abandoned the goal', tries: tries })
+  res.status(200).json({ message: 'You have abandoned the goal', tries: tries })
 }
 
-goalCtrl.deleteGoal = async (req, res) => {
-  const { name } = await Goal.findById(req.params.id)
-  await Goal.findByIdAndDelete(req.params.id)
+goalCtrl.deleteGoal = async (req, res, next) => {
+  try {
+    const goal = await Goal.findByIdAndDelete(req.params.id)
 
-  res
-    .status(200)
-    .json({ message: `The goal ${name} was deleted` })
+    if (goal === null) return res.sendStatus(404)
+
+    res.status(204).json({ message: `The goal ${goal.name} was deleted` })
+  } catch (error) {
+    next(error)
+  }
 }
 
 goalCtrl.resumeGoal = async (req, res) => {
   const { newStart, newEnd } = req.body
-  await Goal.findByIdAndUpdate(req.params.id, { start: newStart, todayDone: false, timeEnd: newEnd, end: false })
+  await Goal.findByIdAndUpdate(req.params.id, {
+    start: newStart,
+    todayDone: false,
+    timeEnd: newEnd,
+    end: false
+  })
 
-  res
-    .status(200)
-    .json({ message: 'Goal resumed' })
+  res.status(200).json({ message: 'Goal resumed' })
 }
 
 module.exports = goalCtrl

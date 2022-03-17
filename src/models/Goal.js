@@ -14,11 +14,19 @@ const GoalSchema = new Schema(
     ],
     todayDone: { type: Boolean, required: false },
     end: { type: Boolean, required: true },
-    user: { type: String, require: true }
+    user: { type: Schema.Types.ObjectId, ref: 'User' }
   },
   {
     timestamps: true
   }
 )
+
+GoalSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
 
 module.exports = model('Goal', GoalSchema)

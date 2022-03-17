@@ -1,1 +1,1 @@
-GET http://localhost:8080/goals/
+GET http://localhost:8080/api/goals/
