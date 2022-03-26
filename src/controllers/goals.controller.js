@@ -1,11 +1,13 @@
 const Goal = require('../models/Goal')
+const User = require('../models/User')
 
 const goalCtrl = {}
 
+// post /api/goals/add
 goalCtrl.createNewGoal = async (req, res, next) => {
-  const { name, description, timeEnd, user } = req.body
+  const { name, description, timeEnd, userId, start } = req.body
 
-  const start = new Date()
+  const user = await User.findById(userId)
 
   const newGoal = new Goal({
     name,
@@ -15,7 +17,7 @@ goalCtrl.createNewGoal = async (req, res, next) => {
     start,
     end: false,
     todayDone: false,
-    user
+    user: user._id
   })
 
   if (!name || !description || !timeEnd) {
@@ -26,18 +28,28 @@ goalCtrl.createNewGoal = async (req, res, next) => {
 
   try {
     const saveGoal = await newGoal.save()
+
+    user.goals.push(saveGoal._id)
+
+    await user.save()
+
     res.status(201).json({ message: 'Goal created', goal: saveGoal })
   } catch (e) {
     next(e)
   }
 }
 
+// get /api/goals
 goalCtrl.getAllGoals = async (req, res) => {
-  const goals = await Goal.find()
+  const goals = await Goal.find({}).populate('user', {
+    username: 1,
+    email: 1
+  })
 
   res.json(goals)
 }
 
+// get /api/goal/:id
 goalCtrl.getSingleGoal = (req, res, next) => {
   Goal.findById(req.params.id)
     .then(goal => {
@@ -46,6 +58,7 @@ goalCtrl.getSingleGoal = (req, res, next) => {
     .catch(e => next(e))
 }
 
+// patch /api/goal/:id
 goalCtrl.wasDone = (req, res, next) => {
   const { todayDone } = req.body
 
@@ -58,6 +71,7 @@ goalCtrl.wasDone = (req, res, next) => {
     .catch(e => next(e))
 }
 
+// put /api/goal/:id
 goalCtrl.abandonGoal = async (req, res, next) => {
   try {
     const { end, newTries } = req.body
@@ -75,6 +89,7 @@ goalCtrl.abandonGoal = async (req, res, next) => {
   }
 }
 
+// delete /api/goal/:id
 goalCtrl.deleteGoal = async (req, res, next) => {
   try {
     const goal = await Goal.findByIdAndDelete(req.params.id)
@@ -87,6 +102,7 @@ goalCtrl.deleteGoal = async (req, res, next) => {
   }
 }
 
+// patch /api/goal/resume/:id
 goalCtrl.resumeGoal = (req, res, next) => {
   const { newStart, newEnd } = req.body
 

@@ -2,9 +2,9 @@ POST http://localhost:8080/api/goals/add
 Content-Type: application/json
 
 {
-  "name": "test",
+  "name": "nota de nana",
   "description": "una descripcion pendeja",
   "timeEnd": "2021-08-02",
   "start": "2022-5-13",
-  "user": "roku_js"
+  "userId": "623d1cbb1f4bd537e5bd80eb"
 }
