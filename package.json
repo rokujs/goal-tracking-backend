@@ -7,7 +7,7 @@
     "eslint": "eslint --init",
     "start": "NODE_ENV=production node src/index.js",
     "dev": "NODE_ENV=development nodemon src/index.js",
-    "test": "NODE_ENV=test jest --verbose --silent",
+    "test": "NODE_ENV=test jest --verbose tests/user.test.js",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
@@ -26,6 +26,7 @@
     "cors": "2.8.5",
     "express": "4.17.1",
     "mongoose": "5.13.5",
+    "mongoose-unique-validator": "2.0.3",
     "morgan": "1.10.0"
   },
   "devDependencies": {
