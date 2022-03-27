@@ -1,3 +1,5 @@
+const userExtractor = require('../middlewares/userExtractor')
+
 const { Router } = require('express')
 const router = Router()
 
@@ -7,7 +9,7 @@ const { createNewGoal, getAllGoals, getSingleGoal, wasDone, abandonGoal, deleteG
 router.get('/api/goals', getAllGoals)
 
 // new Goal
-router.post('/api/goals/add', createNewGoal)
+router.post('/api/goals/add', userExtractor, createNewGoal)
 
 // Single goal
 router.get('/api/goal/:id', getSingleGoal)

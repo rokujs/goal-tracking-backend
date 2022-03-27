@@ -1,10 +1,10 @@
 POST http://localhost:8080/api/goals/add
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2QxY2E2MWY0YmQ1MzdlNWJkODBlNSIsInVzZXJuYW1lIjoicm9rdWpzIiwiaWF0IjoxNjQ4MzQyMTY4LCJleHAiOjE2NDg5NDY5Njh9.vt6x1q9NqLMqsXQW3h1rv_QPspyi3eLl0E7xvOVzFy4
 
 {
   "name": "nota de nana",
   "description": "una descripcion pendeja",
   "timeEnd": "2021-08-02",
-  "start": "2022-5-13",
-  "userId": "623d1cbb1f4bd537e5bd80eb"
+  "start": "2022-5-13"
 }

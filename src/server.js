@@ -21,6 +21,7 @@ app.use(express.json())
 // routes
 app.use(require('./routes/goals.routes'))
 app.use(require('./routes/user.routes'))
+app.use(require('./routes/login.routes'))
 
 // middleware handle
 app.use(notFound)

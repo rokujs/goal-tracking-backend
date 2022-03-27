@@ -5,7 +5,9 @@ const goalCtrl = {}
 
 // post /api/goals/add
 goalCtrl.createNewGoal = async (req, res, next) => {
-  const { name, description, timeEnd, userId, start } = req.body
+  const { body, userId } = req
+
+  const { name, description, timeEnd, start } = body
 
   const user = await User.findById(userId)
 
@@ -62,7 +64,9 @@ goalCtrl.getSingleGoal = (req, res, next) => {
 goalCtrl.wasDone = (req, res, next) => {
   const { todayDone } = req.body
 
-  if (!todayDone) { return res.status(400).json({ message: 'Fields are required' }) }
+  if (!todayDone) {
+    return res.status(400).json({ message: 'Fields are required' })
+  }
 
   Goal.findByIdAndUpdate(req.params.id, { todayDone })
     .then(() => {
@@ -76,14 +80,18 @@ goalCtrl.abandonGoal = async (req, res, next) => {
   try {
     const { end, newTries } = req.body
 
-    if (!end || !newTries) { return res.status(404).json({ message: 'Fields are required' }) }
+    if (!end || !newTries) {
+      return res.status(404).json({ message: 'Fields are required' })
+    }
     const { tries } = await Goal.findById(req.params.id)
 
     tries.push(newTries)
 
     await Goal.findByIdAndUpdate(req.params.id, { end, tries })
 
-    res.status(200).json({ message: 'You have abandoned the goal', tries: tries, end: end })
+    res
+      .status(200)
+      .json({ message: 'You have abandoned the goal', tries: tries, end: end })
   } catch (error) {
     next(error)
   }
@@ -106,7 +114,9 @@ goalCtrl.deleteGoal = async (req, res, next) => {
 goalCtrl.resumeGoal = (req, res, next) => {
   const { newStart, newEnd } = req.body
 
-  if (!newStart || !newEnd) { return res.status(400).json({ message: 'Fields are required' }) }
+  if (!newStart || !newEnd) {
+    return res.status(400).json({ message: 'Fields are required' })
+  }
 
   Goal.findByIdAndUpdate(req.params.id, {
     start: newStart,
