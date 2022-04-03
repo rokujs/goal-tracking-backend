@@ -43,7 +43,7 @@ goalCtrl.createNewGoal = async (req, res, next) => {
 
 // get /api/goals
 goalCtrl.getAllGoals = async (req, res) => {
-  const goals = await Goal.find({}).populate('user', {
+  const goals = await Goal.find({ user: req.userId }).populate('user', {
     username: 1,
     email: 1
   })
