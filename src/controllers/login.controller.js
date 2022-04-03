@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const CreateToken = require('../utils/createToken')
 
 const User = require('../models/User')
 
@@ -16,14 +16,7 @@ loginCtrl.login = async (req, res) => {
     res.status(401).json({ error: 'Invalid username or password' })
   }
 
-  const userForToken = {
-    id: user._id,
-    username: user.username
-  }
-
-  const token = jwt.sign(userForToken, process.env.SECRET, {
-    expiresIn: 60 * 60 * 24 * 7
-  })
+  const token = CreateToken(user._id, user.username)
 
   res.send({
     username: user.username,

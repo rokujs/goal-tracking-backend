@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const CreateToken = require('../utils/createToken')
 
 const User = require('../models/User')
 
@@ -30,7 +31,10 @@ userCtrl.createNewUser = async (req, res) => {
     })
 
     const savedUser = await newUser.save()
-    res.status(201).json(savedUser)
+
+    const token = CreateToken(savedUser._id, savedUser.username)
+
+    res.status(201).json({ username: savedUser.username, token })
   } catch (error) {
     res.status(400).json({ error: '`username` to be unique' })
   }
