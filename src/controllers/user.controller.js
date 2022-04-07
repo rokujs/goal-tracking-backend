@@ -5,6 +5,7 @@ const User = require('../models/User')
 
 const userCtrl = {}
 
+// GET /api/user
 userCtrl.getAllUsers = async (req, res) => {
   const users = await User.find({}).populate('goals', {
     name: 1,
@@ -18,6 +19,7 @@ userCtrl.getAllUsers = async (req, res) => {
   res.json(users)
 }
 
+// POST /api/user
 userCtrl.createNewUser = async (req, res) => {
   try {
     const { username, password, email } = req.body
