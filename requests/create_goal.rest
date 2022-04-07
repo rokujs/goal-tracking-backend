@@ -1,6 +1,6 @@
 POST http://localhost:8080/api/goals/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2QxY2E2MWY0YmQ1MzdlNWJkODBlNSIsInVzZXJuYW1lIjoicm9rdWpzIiwiaWF0IjoxNjQ4MzQyMTY4LCJleHAiOjE2NDg5NDY5Njh9.vt6x1q9NqLMqsXQW3h1rv_QPspyi3eLl0E7xvOVzFy4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNDdhNWIyY2FjYmM3MzRhM2U2NjZmNyIsInVzZXJuYW1lIjoicm9rdWpzIiwiaWF0IjoxNjQ5Mjk2MjYxLCJleHAiOjE2NDk5MDEwNjF9.VcwAJ-mPJNgJJQsEFrhF6xSF2Vr6dYXDOREhPd4dgkQ
 
 {
   "name": "nota de nana",

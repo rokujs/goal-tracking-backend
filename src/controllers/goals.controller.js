@@ -11,6 +11,8 @@ goalCtrl.createNewGoal = async (req, res, next) => {
 
   const user = await User.findById(userId)
 
+  console.log('user:', user, 'userId:', userId)
+
   const newGoal = new Goal({
     name,
     description,
@@ -31,9 +33,14 @@ goalCtrl.createNewGoal = async (req, res, next) => {
   try {
     const saveGoal = await newGoal.save()
 
-    user.goals.push(saveGoal._id)
+    // user.goals.push(saveGoal._id)
 
-    await user.save()
+    // await user.save()
+
+    await User.updateOne(
+      { _id: user._id },
+      { $push: { goals: saveGoal._id } }
+    )
 
     res.status(201).json({ message: 'Goal created', goal: saveGoal })
   } catch (e) {
