@@ -11,8 +11,6 @@ goalCtrl.createNewGoal = async (req, res, next) => {
 
   const user = await User.findById(userId)
 
-  console.log('user:', user, 'userId:', userId)
-
   const newGoal = new Goal({
     name,
     description,

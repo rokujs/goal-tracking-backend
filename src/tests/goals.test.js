@@ -340,9 +340,6 @@ describe('PATCH /api/goal/resume/:id', () => {
       token
     })
 
-    console.log('responseSecond', secondResponse.body)
-    console.log('resGoal', resGoal.body)
-
     expect(resGoal.body.message).toBe('Fields are required')
     expect(secondResponse.body).toHaveLength(initialGoals.length)
     expect(secondResponse.body[0].todayDone).toBe(true)
