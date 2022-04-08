@@ -7,7 +7,7 @@
     "eslint": "eslint --init",
     "start": "NODE_ENV=production node src/index.js",
     "dev": "NODE_ENV=development nodemon src/index.js",
-    "test": "NODE_ENV=test jest --verbose",
+    "test": "NODE_ENV=test PORT=8081 jest --verbose",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {

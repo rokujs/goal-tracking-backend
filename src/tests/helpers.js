@@ -9,35 +9,20 @@ const initialGoals = [
     name: 'Learn React',
     description: 'Learn React',
     start: '2020-01-01',
-    timeEnd: '2020-01-02',
-    tries: [
-      {
-        start: '2020-01-01',
-        end: '2020-01-02'
-      }
-    ],
-    todayDone: false,
-    end: false
+    timeEnd: '2020-01-02'
   },
   {
     name: 'Learn Node',
     description: 'Learn Node',
     start: '2020-01-01',
-    timeEnd: '2020-01-02',
-    tries: [
-      {
-        start: '2020-01-01',
-        end: '2020-01-02'
-      }
-    ],
-    todayDone: false,
-    end: false
+    timeEnd: '2020-01-02'
   }
 ]
 
-const getAlldescriptionsFromGoals = async () => {
+const getAlldescriptionsFromGoals = async ({ token }) => {
   const response = await api
     .get('/api/goals')
+    .set('Authorization', `Bearer ${token}`)
     .expect(200)
     .expect('Content-Type', /application\/json/)
   return {
