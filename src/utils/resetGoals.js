@@ -5,7 +5,7 @@ const Goal = require("../models/Goal")
 function reset () {
   Goal.find().then(goals => {
     goals.forEach(goal => {
-      if (!goal.todayDone && goal.end) {
+      if (!goal.todayDone && !goal.end) {
         Goal.findByIdAndUpdate(goal._id, {
           $set: { todayDone: true, end: true },
           $push: { tries: { start: goal.start, end: new Date() } }
@@ -44,4 +44,4 @@ function launcher (hour, minutes, task) {
   }, moment.getTime() - now.getTime())
 }
 
-launcher(0, 10, reset)
+launcher(21, 53, reset)
