@@ -44,4 +44,4 @@ function launcher (hour, minutes, task) {
   }, moment.getTime() - now.getTime())
 }
 
-launcher(21, 53, reset)
+launcher(0, 10, reset)
