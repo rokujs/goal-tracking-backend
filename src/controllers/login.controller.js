@@ -7,8 +7,11 @@ const loginCtrl = {}
 
 loginCtrl.login = async (req, res) => {
   const { username, password } = req.body
+  const regex = /\S+@\S+\u002e\S+/
 
-  const user = await User.findOne({ username })
+  const findUser = (regex.test(username)) ? { email: username } : { username }
+
+  const user = await User.findOne(findUser)
   const passwordCorrect =
     user === null ? false : await bcrypt.compare(password, user.passwordHash)
 
