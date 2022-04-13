@@ -38,7 +38,7 @@ userCtrl.createNewUser = async (req, res) => {
 
     res.status(201).json({ username: savedUser.username, token })
   } catch (error) {
-    res.status(400).json({ error: '`username` to be unique' })
+    res.status(400).json({ message: 'username or email to be unique' })
   }
 }
 

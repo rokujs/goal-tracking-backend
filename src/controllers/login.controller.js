@@ -13,7 +13,7 @@ loginCtrl.login = async (req, res) => {
     user === null ? false : await bcrypt.compare(password, user.passwordHash)
 
   if (!(user && passwordCorrect)) {
-    res.status(401).json({ error: 'Invalid username or password' })
+    res.status(401).json({ message: 'Invalid username or password' })
   }
 
   const token = CreateToken(user._id, user.username)

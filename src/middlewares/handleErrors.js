@@ -1,8 +1,8 @@
 const ERROR_HANDLERS = {
-  CastError: ({ res }) => res.status(400).send({ error: 'malformatted id' }),
-  ValidationError: ({ res, error }) => res.status(409).send({ error: error.message }),
-  JsonWebTokenError: ({ res }) => res.status(401).json({ error: 'token missing or invalid' }),
-  TokenExpirerError: ({ res }) => res.status(401).json({ error: 'token expired' }),
+  CastError: ({ res }) => res.status(400).json({ message: 'malformatted id' }),
+  ValidationError: ({ res, error }) => res.status(409).json({ message: error.message }),
+  JsonWebTokenError: ({ res }) => res.status(401).json({ message: 'token missing or invalid' }),
+  TokenExpirerError: ({ res }) => res.status(401).json({ message: 'token expired' }),
   defaultError: (res) => res.status(500).send('Something broke!')
 }
 
