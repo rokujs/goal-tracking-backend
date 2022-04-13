@@ -13,12 +13,13 @@ if (process.env.NODE_ENV !== 'jest') require('./utils/resetGoals')
 
 // middleware
 app.use(cors())
-app.use(morgan('dev'))
+if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 app.use(express.json())
 
 // Global variables
 
 // routes
+app.use(require('./routes/other.routes'))
 app.use(require('./routes/goals.routes'))
 app.use(require('./routes/user.routes'))
 app.use(require('./routes/login.routes'))

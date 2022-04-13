@@ -3,7 +3,7 @@
 const Goal = require("../models/Goal")
 
 function reset () {
-  Goal.find().then(goals => {
+  Goal.find({}).then(goals => {
     goals.forEach(goal => {
       if (!goal.todayDone && !goal.end) {
         Goal.findByIdAndUpdate(goal._id, {
